@@ -1,0 +1,57 @@
+<? php
+$capital=67;
+print(“Variable capital is $capital”);
+print(“Variable CaPiTaL is $CaPiTaL”);
+?>
+
+
+
+OUTPUT
+ERROR!
+/tmp/Am00wiBXdc/main.c:1:1: error: expected identifier or '(' before '<' token
+    1 | <? php
+      | ^
+/tmp/Am00wiBXdc/main.c:3:7: error: expected declaration specifiers or '...' before string constant
+    3 | print("Variable capital is $capital");
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/Am00wiBXdc/main.c:4:7: error: stray '\342' in program
+    4 | print(<U+201C>Variable CaPiTaL is $CaPiTaL<U+201D>);
+      |       ^~~~~~~~
+ERROR!
+/tmp/Am00wiBXdc/main.c:4:8: error: unknown type name 'Variable'
+    4 | print(“Variable CaPiTaL is $CaPiTaL”);
+      |        ^~~~~~~~
+/tmp/Am00wiBXdc/main.c:4:36: error: stray '\342' in program
+    4 | print(<U+201C>Variable CaPiTaL is $CaPiTaL<U+201D>);
+      |                                           ^~~~~~~~
+/tmp/Am00wiBXdc/main.c:5:1: error: expected identifier or '(' before '?' token
+    5 | ?>
+      | ^
+
+
+=== Code Exited With Errors ===
+
+
+
+ Problems in the Code:
+<? php has an extra space. It should be <?php.
+
+“ and ” are smart quotes (curly quotes). PHP requires straight quotes: " or '.
+
+$CaPiTaL is undefined — PHP is case-sensitive for variable names.
+
+
+
+
+CORRECT CODE
+
+<?php
+$capital = 67;
+print("Variable capital is $capital\n");
+print("Variable CaPiTaL is $CaPiTaL\n");
+?>
+
+
+OUTPUT
+Variable capital is 67
+
