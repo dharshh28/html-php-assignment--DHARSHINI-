@@ -55,3 +55,76 @@ print("Variable CaPiTaL is $CaPiTaL\n");
 OUTPUT
 Variable capital is 67
 
+
+
+
+
+2.Create a PHP program to display the division table using for-loop.
+1 2 3
+1 1 0.5 0.33
+2 2 1 0.66
+3 3 1.5 1
+
+<html>
+<head>
+    <title>Division Table</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<?php
+echo "<table>";
+echo "<tr><td></td>"; // Top-left empty cell
+
+// Top header row
+for ($i = 1; $i <= 3; $i++) {
+    echo "<td>$i</td>";
+}
+echo "</tr>";
+
+// Table rows
+for ($row = 1; $row <= 3; $row++) {
+    echo "<tr>";
+    echo "<td>$row</td>"; // First column (row header)
+
+    for ($col = 1; $col <= 3; $col++) {
+        $result = $row / $col;
+        echo "<td>" . round($result, 2) . "</td>";
+    }
+
+    echo "</tr>";
+}
+echo "</table>";
+?>
+
+</body>
+</html>
+
+
+OUTPUT
+ | 1   2    3
+  ---------------
+  1  | 1  0.5  0.33
+  2  | 2   1   0.66
+  3  | 3  1.5   1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
