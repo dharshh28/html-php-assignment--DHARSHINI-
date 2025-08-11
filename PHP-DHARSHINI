@@ -183,7 +183,445 @@ output:
 The antelope has 1 head(s).The antelope has 4 leg(s).
 
 
+5. You are building a website where users can calculate the total cost of their purchases.
+Write a PHP program that takes the price and quantity of three items from the user and
+calculates the subtotal, tax (10% of the subtotal),and the total cost (subtotal + tax).
+Display the results to the user.
 
+
+program:
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Purchase Cost Calculator</title>
+</head>
+<body>
+    <h2>Purchase Cost Calculator</h2>
+
+    <form method="post">
+        <h3>Item 1</h3>
+        Price: <input type="number" step="0.01" name="price1" required>
+        Quantity: <input type="number" name="qty1" required><br><br>
+
+        <h3>Item 2</h3>
+        Price: <input type="number" step="0.01" name="price2" required>
+        Quantity: <input type="number" name="qty2" required><br><br>
+
+        <h3>Item 3</h3>
+        Price: <input type="number" step="0.01" name="price3" required>
+        Quantity: <input type="number" name="qty3" required><br><br>
+
+        <input type="submit" name="calculate" value="Calculate">
+    </form>
+
+    <?php
+    if (isset($_POST['calculate'])) {
+        // Get input values
+        $price1 = $_POST['price1'];
+        $qty1   = $_POST['qty1'];
+
+        $price2 = $_POST['price2'];
+        $qty2   = $_POST['qty2'];
+
+        $price3 = $_POST['price3'];
+        $qty3   = $_POST['qty3'];
+
+        // Calculate subtotal
+        $subtotal = ($price1 * $qty1) + ($price2 * $qty2) + ($price3 * $qty3);
+
+        // Calculate tax (10% of subtotal)
+        $tax = $subtotal * 0.10;
+
+        // Calculate total
+        $total = $subtotal + $tax;
+
+        // Display results
+        echo "<h3>Bill Summary:</h3>";
+        echo "Subtotal: ₹" . number_format($subtotal, 2) . "<br>";
+        echo "Tax (10%): ₹" . number_format($tax, 2) . "<br>";
+        echo "<strong>Total Cost: ₹" . number_format($total, 2) . "</strong>";
+    }
+    ?>
+</body>
+</html>
+
+
+6. Interpret the method to pass the information between pages in PHP with an example.
+
+program:
+
+<?php
+session_start(); // Needed for SESSION method
+
+// Handle form submissions or links
+$result = "";
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['method']) && $_GET['method'] === 'get') {
+    $name = $_GET['name'] ?? '';
+    $age  = $_GET['age'] ?? '';
+    $result = "<b>GET Method:</b> Hello, $name. You are $age years old.";
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['method']) && $_POST['method'] === 'post') {
+    $name = $_POST['name'] ?? '';
+    $age  = $_POST['age'] ?? '';
+    $result = "<b>POST Method:</b> Hello, $name. You are $age years old.";
+}
+
+if (isset($_GET['method']) && $_GET['method'] === 'session') {
+    $_SESSION['username'] = "Dharshini"; // Store in session
+    $result = "<b>SESSION Method:</b> Welcome, " . $_SESSION['username'] . "!";
+}
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Passing Data Between Pages in PHP</title>
+</head>
+<body>
+    <h2>Passing Information Between Pages</h2>
+
+    <!-- GET Method Form -->
+    <form method="get">
+        <input type="hidden" name="method" value="get">
+        <h3>GET Method</h3>
+        Name: <input type="text" name="name"><br>
+        Age: <input type="number" name="age"><br>
+        <input type="submit" value="Send via GET">
+    </form>
+
+    <hr>
+
+    <!-- POST Method Form -->
+    <form method="post">
+        <input type="hidden" name="method" value="post">
+        <h3>POST Method</h3>
+        Name: <input type="text" name="name"><br>
+        Age: <input type="number" name="age"><br>
+        <input type="submit" value="Send via POST">
+    </form>
+
+    <hr>
+
+    <!-- SESSION Method Link -->
+    <h3>SESSION Method</h3>
+    <a href="?method=session">Go to Session Example</a>
+
+    <hr>
+    <!-- Display Result -->
+    <?php
+    if (!empty($result)) {
+        echo "<h3>Result:</h3>";
+        echo $result;
+    }
+    ?>
+</body>
+</html>
+
+
+
+7. Create a form which takes the name of the user as input and prints a greeting in the format
+given below and if the user submits the form with the name field blank, it prints an
+appropriate error message.
+
+Hello, Welcome to Everyone!
+Have a nice day!!
+
+program:
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Greeting Form</title>
+</head>
+<body>
+    <h2>User Greeting Form</h2>
+
+    <form method="post">
+        Enter your name: 
+        <input type="text" name="username">
+        <input type="submit" name="submit" value="Greet Me">
+    </form>
+
+    <hr>
+
+    <?php
+    if (isset($_POST['submit'])) {
+        $name = trim($_POST['username']); // Remove extra spaces
+
+        if ($name === "") {
+            echo "<p style='color:red;'>Error: Please enter your name.</p>";
+        } else {
+            echo "<h3>Hello, $name! Welcome to Everyone!</h3>";
+            echo "<p>Have a nice day!!</p>";
+        }
+    }
+    ?>
+</body>
+</html>
+
+
+
+8.A customer visits a shop to buy a soft drink; he has two options:
+Drink A cost is Rs.25 and the size of the bottle is 11.
+Drink B cost is Rs.23 and its size of the bottle is 9.
+Which drink should he choose to save money? Solve this problem using function deal ( ).
+
+program:  
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Soft Drink Deal Calculator</title>
+</head>
+<body>
+    <h2>Soft Drink Deal Calculator</h2>
+
+    <?php
+    function deal($costA, $sizeA, $costB, $sizeB) {
+        // Calculate cost per litre
+        $perLitreA = $costA / $sizeA;
+        $perLitreB = $costB / $sizeB;
+
+        echo "Cost per litre of Drink A: Rs. " . number_format($perLitreA, 2) . "<br>";
+        echo "Cost per litre of Drink B: Rs. " . number_format($perLitreB, 2) . "<br><br>";
+
+        // Compare and decide
+        if ($perLitreA < $perLitreB) {
+            echo "<strong>Drink A is a better deal! ✅</strong>";
+        } elseif ($perLitreB < $perLitreA) {
+            echo "<strong>Drink B is a better deal! ✅</strong>";
+        } else {
+            echo "<strong>Both drinks cost the same per litre. 🤝</strong>";
+        }
+    }
+
+    // Given data
+    $costA = 25;
+    $sizeA = 11;
+
+    $costB = 23;
+    $sizeB = 9;
+
+    // Call the function
+    deal($costA, $sizeA, $costB, $sizeB);
+    ?>
+
+</body>
+</html>
+
+9. Predict the output of the following snippet:
+$this = “this”; $that = “that”; $the_other = 2.2000000000;
+print(“$this,$not_set,$that+$the_other”);
+
+
+<?php
+// Enable error reporting to show notices
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+$this = "this";
+$that = "that";
+$the_other = 2.2000000000;
+
+print("$this,$not_set,$that+$the_other");
+?>
+
+
+10. Develop a program to check student grades based on marks using a loop.
+
+program:
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Grades Checker</title>
+</head>
+<body>
+    <h2>Enter Marks for Students</h2>
+    <form method="post">
+        <label>Number of Students: </label>
+        <input type="number" name="num_students" min="1" value="<?php echo isset($_POST['num_students']) ? $_POST['num_students'] : 1; ?>" required>
+        <input type="submit" name="set" value="Set">
+    </form>
+
+    <?php
+    function getGrade($marks) {
+        if ($marks >= 90) return 'A';
+        elseif ($marks >= 80) return 'B';
+        elseif ($marks >= 70) return 'C';
+        elseif ($marks >= 60) return 'D';
+        else return 'F';
+    }
+
+    if (isset($_POST['set']) && !empty($_POST['num_students'])) {
+        $num = intval($_POST['num_students']);
+        if ($num > 0) {
+            echo "<h3>Enter marks for $num student(s):</h3>";
+            echo '<form method="post">';
+            // Keep the number of students in a hidden input for later processing
+            echo '<input type="hidden" name="num_students" value="'.$num.'">';
+            echo '<table border="1" cellpadding="5" cellspacing="0">';
+            echo '<tr><th>Student #</th><th>Marks (0-100)</th></tr>';
+
+            for ($i = 1; $i <= $num; $i++) {
+                $value = isset($_POST["marks_$i"]) ? $_POST["marks_$i"] : '';
+                echo "<tr>";
+                echo "<td>Student $i</td>";
+                echo "<td><input type='number' name='marks_$i' min='0' max='100' value='$value' required></td>";
+                echo "</tr>";
+            }
+            echo "</table><br>";
+            echo '<input type="submit" name="check_grades" value="Check Grades">';
+            echo '</form>';
+        }
+    }
+
+    if (isset($_POST['check_grades']) && !empty($_POST['num_students'])) {
+        $num = intval($_POST['num_students']);
+        echo "<h3>Grades:</h3>";
+        echo '<table border="1" cellpadding="5" cellspacing="0">';
+        echo '<tr><th>Student #</th><th>Marks</th><th>Grade</th></tr>';
+
+        for ($i = 1; $i <= $num; $i++) {
+            $marks = isset($_POST["marks_$i"]) ? intval($_POST["marks_$i"]) : 0;
+            $grade = getGrade($marks);
+            echo "<tr>";
+            echo "<td>Student $i</td>";
+            echo "<td>$marks</td>";
+            echo "<td>$grade</td>";
+            echo "</tr>";
+        }
+        echo '</table>';
+    }
+    ?>
+</body>
+</html>
+
+
+11.Develop a PHP program to show days of the week using switch cases.
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Days of the Week</title>
+</head>
+<body>
+    <h2>Show Day of the Week</h2>
+
+    <form method="post">
+        Enter a number (1-7): 
+        <input type="number" name="day" min="1" max="7" required>
+        <input type="submit" value="Show Day">
+    </form>
+
+    <?php
+    if (isset($_POST['day'])) {
+        $day = intval($_POST['day']);
+
+        switch ($day) {
+            case 1:
+                $dayName = "Sunday";
+                break;
+            case 2:
+                $dayName = "Monday";
+                break;
+            case 3:
+                $dayName = "Tuesday";
+                break;
+            case 4:
+                $dayName = "Wednesday";
+                break;
+            case 5:
+                $dayName = "Thursday";
+                break;
+            case 6:
+                $dayName = "Friday";
+                break;
+            case 7:
+                $dayName = "Saturday";
+                break;
+            default:
+                $dayName = "Invalid input! Please enter a number between 1 and 7.";
+        }
+
+        echo "<h3>Day: $dayName</h3>";
+    }
+    ?>
+</body>
+</html>
+
+12. Write a program to check student grade based on marks:
+Conditions:
+If marks are 75% or more, the grade will be First Class.
+If marks between 60% to 74%, grade will be second class.
+If marks between 40% to 59%, grade will be third class.
+If marks are less than 40%, students will be Fail.
+
+program:
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Grade Checker</title>
+</head>
+<body>
+    <h2>Check Student Grade</h2>
+
+    <form method="post">
+        Enter marks (0-100): 
+        <input type="number" name="marks" min="0" max="100" required>
+        <input type="submit" value="Check Grade">
+    </form>
+
+    <?php
+    if (isset($_POST['marks'])) {
+        $marks = floatval($_POST['marks']);
+        $grade = "";
+
+        if ($marks >= 75) {
+            $grade = "First Class";
+        } elseif ($marks >= 60) {
+            $grade = "Second Class";
+        } elseif ($marks >= 40) {
+            $grade = "Third Class";
+        } else {
+            $grade = "Fail";
+        }
+
+        echo "<h3>Your Grade: $grade</h3>";
+    }
+    ?>
+</body>
+</html>
+
+
+
+13.13. Consider the following snippet, comment your views.
+$sub = substr(12345, 2, 2);
+echo “sub is $sub”;
+
+program
+
+<?php
+// Original snippet with implicit conversion
+$sub = substr(12345, 2, 2);
+echo "sub is $sub\n";
+
+// Safer version: explicit string conversion
+$num = 12345;
+$strNum = (string)$num;           // Convert number to string explicitly
+$sub2 = substr($strNum, 2, 2);
+echo "sub2 is $sub2\n";
+?>
+
+
+output:
+ sub is 34
+ sub2 is 34
 
 
 
