@@ -116,6 +116,75 @@ OUTPUT
   3  | 3  1.5   1
 
 
+3. Imagine you are building a personal portfolio website. Design a web page layout that
+includes a header, a navigation menu, a main content area for displaying your projects
+and a footer. Explain how you would structure the HTML code and apply CSS styles to
+achieve the desired layout and visual design.
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Portfolio</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>John Doe</h1>
+    <p>Web Developer | Problem Solver | Tech Enthusiast</p>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section id="projects">
+      <h2>My Projects</h2>
+      <div class="project">
+        <h3>Project One</h3>
+        <p>Description of project one.</p>
+      </div>
+      <div class="project">
+        <h3>Project Two</h3>
+        <p>Description of project two.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 John Doe. All rights reserved.</p>
+  </footer>
+</body>
+</html>
+
+
+4.  Predict the output of the following snippet:
+$animal = “antelope”; $animal_heads = 1; $animal_legs = 4;
+echo“The $animal has $animal_heads head(s).”;
+echo“The $animal has $animal_legs leg(s).”;
+
+Corrected Version:
+
+$animal = "antelope"; 
+$animal_heads = 1; 
+$animal_legs = 4;
+
+echo "The $animal has $animal_heads head(s).";
+echo "The $animal has $animal_legs leg(s).";
+
+output:
+The antelope has 1 head(s).The antelope has 4 leg(s).
+
+
+
+
 
 
 
