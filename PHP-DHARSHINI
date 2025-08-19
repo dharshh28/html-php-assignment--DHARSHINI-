@@ -1,3 +1,4 @@
+
 <? php
 $capital=67;
 print(“Variable capital is $capital”);
@@ -622,6 +623,740 @@ echo "sub2 is $sub2\n";
 output:
  sub is 34
  sub2 is 34
+
+14. Show a form with input fields for a user's name, email, and message. When the form is
+submitted, display a confirmation message on the same page with the user's name and
+email.
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Form with Confirmation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 50px;
+    }
+    form {
+      max-width: 400px;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: teal;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #confirmation {
+      display: none;
+      padding: 15px;
+      background-color: #e6ffe6;
+      border: 1px solid #5cb85c;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Contact Form</h2>
+  <form id="userForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" required>
+
+    <label for="message">Message:</label>
+    <textarea id="message" rows="4" required></textarea>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <div id="confirmation"></div>
+
+  <script>
+    const form = document.getElementById("userForm");
+    const confirmation = document.getElementById("confirmation");
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault(); // stop page refresh
+
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+
+      confirmation.style.display = "block";
+      confirmation.innerHTML = `<h3>Thank you, ${name}!</h3>
+                                <p>We have received your message. A confirmation has been sent to <strong>${email}</strong>.</p>`;
+
+      form.reset(); // clear form
+    });
+  </script>
+
+</body>
+</html>
+
+
+15. Create a PHP program to compute the sum of the digits of a number.
+
+<?php
+// Function to compute sum of digits
+function sumOfDigits($num) {
+    $sum = 0;
+    while ($num > 0) {
+        $digit = $num % 10;   // get last digit
+        $sum += $digit;       // add to sum
+        $num = (int)($num / 10); // remove last digit
+    }
+    return $sum;
+}
+
+// Example usage
+$number = 12345;
+echo "The sum of digits of $number is: " . sumOfDigits($number);
+?>
+
+output:
+The sum of digits of 12345 is: 15
+
+
+
+
+16. Write a PHP function that takes two numbers as input and returns the sum of those
+numbers. Display the result on the webpage, when a button is clicked.
+
+<?php
+// PHP function to add two numbers
+function addNumbers($num1, $num2) {
+    return $num1 + $num2;
+}
+
+// Initialize result
+$result = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $n1 = $_POST['num1'];
+    $n2 = $_POST['num2'];
+    $result = "The sum of $n1 and $n2 is: " . addNumbers($n1, $n2);
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Two Numbers</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        form {
+            max-width: 300px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+        input, button {
+            margin-top: 10px;
+            padding: 8px;
+            width: 100%;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 10px;
+            background: #e6ffe6;
+            border: 1px solid #5cb85c;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Add Two Numbers</h2>
+
+<form method="post">
+    <label>Enter first number:</label>
+    <input type="number" name="num1" required>
+
+    <label>Enter second number:</label>
+    <input type="number" name="num2" required>
+
+    <button type="submit">Calculate Sum</button>
+</form>
+
+<?php if ($result != ""): ?>
+    <div class="result"><?php echo $result; ?></div>
+<?php endif; ?>
+
+</body>
+</html>
+
+
+17. Examine the various control structures in php and construct a bank transaction problem
+with customers deposit and withdrawal of amount.
+
+<?php
+// Initial balance
+$balance = 1000;
+
+// Function to deposit money
+function deposit($amount, $balance) {
+    if ($amount > 0) {
+        $balance += $amount;
+        echo "Deposited: $amount <br>";
+    } else {
+        echo "Invalid deposit amount.<br>";
+    }
+    return $balance;
+}
+
+// Function to withdraw money
+function withdraw($amount, $balance) {
+    if ($amount > 0) {
+        if ($amount <= $balance) {
+            $balance -= $amount;
+            echo "Withdrawn: $amount <br>";
+        } else {
+            echo "Insufficient balance.<br>";
+        }
+    } else {
+        echo "Invalid withdrawal amount.<br>";
+    }
+    return $balance;
+}
+
+// Example transactions
+echo "<h2>Bank Transactions</h2>";
+echo "Initial Balance: $balance <br><br>";
+
+// Deposit 500
+$balance = deposit(500, $balance);
+echo "Balance after deposit: $balance <br><br>";
+
+// Withdraw 300
+$balance = withdraw(300, $balance);
+echo "Balance after withdrawal: $balance <br><br>";
+
+// Withdraw 2000 (more than balance)
+$balance = withdraw(2000, $balance);
+echo "Final Balance: $balance <br>";
+?>
+
+output:
+Bank Transactions
+Initial Balance: 1000
+
+Deposited: 500
+Balance after deposit: 1500
+
+Withdrawn: 300
+Balance after withdrawal: 1200
+
+Insufficient balance.
+Final Balance: 1200
+
+
+18. IsSet() function in PHP with example.
+
+
+<?php
+$a = 10;
+$b = "Hello";
+
+if (isset($a, $b)) {
+    echo "Both variables are set.";
+} else {
+    echo "At least one variable is not set.";
+}
+?>
+
+
+output:
+Both variables are set.
+
+
+19. Examine a PHP function that accepts an array of numbers and returns the highest and
+lowest values in that array. Display the results on the webpage.
+
+
+<?php
+// Function to get highest and lowest values
+function findHighLow($numbers) {
+    $highest = max($numbers);
+    $lowest = min($numbers);
+
+    return array("highest" => $highest, "lowest" => $lowest);
+}
+
+// Example array
+$nums = array(45, 12, 78, 34, 99, 23, 5);
+
+// Call function
+$result = findHighLow($nums);
+
+// Display results
+echo "<h2>Array Values:</h2>";
+echo implode(", ", $nums) . "<br><br>";
+
+echo "<h3>Results:</h3>";
+echo "Highest Value: " . $result['highest'] . "<br>";
+echo "Lowest Value: " . $result['lowest'] . "<br>";
+?>
+
+
+output:
+Array Values:
+45, 12, 78, 34, 99, 23, 5
+
+Results:
+Highest Value: 99
+Lowest Value: 5
+
+
+20.Implement a contact form with validation to ensure all fields are filled out before
+submission.
+
+
+<?php
+// Initialize variables
+$name = $email = $message = "";
+$error = "";
+$success = "";
+
+// Check if form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST["name"]) || empty($_POST["email"]) || empty($_POST["message"])) {
+        $error = "⚠️ All fields are required.";
+    } else {
+        $name = htmlspecialchars($_POST["name"]);
+        $email = htmlspecialchars($_POST["email"]);
+        $message = htmlspecialchars($_POST["message"]);
+
+        $success = "✅ Thank you, $name! Your message has been received.";
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Form with Validation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        form {
+            max-width: 400px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background: teal;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+        .success {
+            color: green;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Contact Us</h2>
+
+<form method="post" action="">
+    <label for="name">Name:</label>
+    <input type="text" name="name" value="<?php echo $name; ?>">
+
+    <label for="email">Email:</label>
+    <input type="email" name="email" value="<?php echo $email; ?>">
+
+    <label for="message">Message:</label>
+    <textarea name="message" rows="4"><?php echo $message; ?></textarea>
+
+    <button type="submit">Send</button>
+</form>
+
+<?php if ($error): ?>
+    <div class="error"><?php echo $error; ?></div>
+<?php endif; ?>
+
+<?php if ($success): ?>
+    <div class="success"><?php echo $success; ?></div>
+<?php endif; ?>
+
+</body>
+</html>
+
+
+21.Construct a PHP function that checks if a given year is a leap year and returns true or
+false accordingly.
+
+
+<?php
+// Function to check leap year
+function isLeapYear($year) {
+    if (($year % 4 == 0 && $year % 100 != 0) || ($year % 400 == 0)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// Example usage
+$year = 2024;
+
+if (isLeapYear($year)) {
+    echo "$year is a Leap Year.";
+} else {
+    echo "$year is NOT a Leap Year.";
+}
+?>
+
+output:
+
+2024 is a Leap Year
+
+22. Create a PHP script that counts the number of occurrences of a specific word in a given
+string.
+
+<?php
+// Function to count occurrences of a word
+function countWordOccurrences($string, $word) {
+    // Convert both to lowercase for case-insensitive search
+    $string = strtolower($string);
+    $word = strtolower($word);
+
+    // Split string into words
+    $wordsArray = str_word_count($string, 1);
+
+    // Count occurrences
+    $count = 0;
+    foreach ($wordsArray as $w) {
+        if ($w === $word) {
+            $count++;
+        }
+    }
+
+    return $count;
+}
+
+// Example usage
+$text = "PHP is a popular scripting language. PHP is used for web development. I love PHP!";
+$searchWord = "PHP";
+
+echo "The word '$searchWord' occurs " . countWordOccurrences($text, $searchWord) . " times in the given string.";
+?>
+
+
+output:
+The word 'PHP' occurs 3 times in the given string.
+
+
+23.Prioritize the use of GET and POST arguments in PHP with a real time example.
+
+
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Simple check (in real apps, use DB + hashing)
+    if ($username == "user1" && $password == "1234") {
+        header("Location: balance.php?user=" . urlencode($username));
+        exit();
+    } else {
+        echo "❌ Invalid login details.";
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bank Login</title>
+</head>
+<body>
+    <h2>Bank Login</h2>
+    <form method="post">
+        <label>Username:</label><br>
+        <input type="text" name="username" required><br><br>
+
+        <label>Password:</label><br>
+        <input type="password" name="password" required><br><br>
+
+        <button type="submit">Login</button>
+    </form>
+</body>
+</html>
+
+
+<?php
+// Retrieve username using GET
+if (isset($_GET['user'])) {
+    $user = $_GET['user'];
+    echo "<h2>Welcome, $user!</h2>";
+    echo "Your current balance is: ₹50,000";
+} else {
+    echo "⚠️ No user specified.";
+}
+?>
+
+
+24. Write a PHP script to manipulate the strings with all the string functions.
+
+
+<?php
+// Sample string
+$str = "  Hello, PHP World!  ";
+$anotherStr = "PHP is amazing.";
+
+// 1. strlen() - Length of string
+echo "1. Length of string: " . strlen($str) . "<br>";
+
+// 2. trim() - Remove whitespace from start and end
+echo "2. Trimmed string: '" . trim($str) . "'<br>";
+
+// 3. strtoupper() - Convert to uppercase
+echo "3. Uppercase: " . strtoupper($str) . "<br>";
+
+// 4. strtolower() - Convert to lowercase
+echo "4. Lowercase: " . strtolower($str) . "<br>";
+
+// 5. strpos() - Position of substring
+$pos = strpos($str, "PHP");
+echo "5. Position of 'PHP': " . $pos . "<br>";
+
+// 6. str_replace() - Replace substring
+echo "6. Replace 'World' with 'Everyone': " . str_replace("World", "Everyone", $str) . "<br>";
+
+// 7. substr() - Extract substring
+echo "7. Substring (7, 3): " . substr($str, 7, 3) . "<br>";
+
+// 8. strcmp() - Compare strings
+$compare = strcmp("Apple", "apple");
+echo "8. Compare 'Apple' and 'apple': " . $compare . "<br>";
+
+// 9. explode() - Convert string to array
+$arr = explode(" ", $anotherStr);
+echo "9. Explode string: ";
+print_r($arr);
+echo "<br>";
+
+// 10. implode() - Join array to string
+$newStr = implode("-", $arr);
+echo "10. Implode array: " . $newStr . "<br>";
+
+// 11. strrev() - Reverse string
+echo "11. Reverse string: " . strrev($str) . "<br>";
+
+// 12. ucwords() - Capitalize first letter of each word
+echo "12. Capitalize Words: " . ucwords(strtolower($str)) . "<br>";
+
+// 13. substr_count() - Count occurrences of substring
+echo "13. Count 'PHP' in string: " . substr_count($str, "PHP") . "<br>";
+
+// 14. str_pad() - Pad string
+echo "14. Padded string: '" . str_pad("PHP", 10, "*") . "'<br>";
+
+// 15. ltrim() / rtrim() - Trim left/right
+echo "15. Left trimmed: '" . ltrim($str) . "'<br>";
+echo "15. Right trimmed: '" . rtrim($str) . "'<br>";
+
+// 16. htmlspecialchars() - Convert special chars to HTML entities
+$htmlStr = "<b>Bold Text</b>";
+echo "16. HTML Special Chars: " . htmlspecialchars($htmlStr) . "<br>";
+
+// 17. ucfirst() - Capitalize first character
+echo "17. ucfirst: " . ucfirst(strtolower($str)) . "<br>";
+
+// 18. wordwrap() - Wrap long strings
+$longStr = "PHP is a popular server-side scripting language used for web development.";
+echo "18. Wordwrap:<br>" . wordwrap($longStr, 20, "<br>") . "<br>";
+
+// 19. addslashes() / stripslashes()
+$quoteStr = "It's a PHP string.";
+$escaped = addslashes($quoteStr);
+echo "19. Escaped string: " . $escaped . "<br>";
+echo "19. Unescaped string: " . stripslashes($escaped) . "<br>";
+
+// 20. number_format() - Format number as string
+$number = 1234567.89;
+echo "20. Formatted number: " . number_format($number) . "<br>";
+?>
+
+
+
+25.Construct a PHP script to replace the first ‘the’ of the following string with ‘best’. Data:
+“The Thing will come to you soon”
+
+
+<?php
+// Original string
+$str = "The Thing will come to you soon";
+
+// Replace first occurrence of 'the' with 'best' (case-insensitive)
+$newStr = preg_replace('/\bthe\b/i', 'best', $str, 1);
+
+// Display the result
+echo "Original String: $str<br>";
+echo "Modified String: $newStr";
+?>
+
+
+output:
+Original String: The Thing will come to you soon
+Modified String: best Thing will come to you soon
+
+
+
+26. Construct a php program to create a chess board in PHP using the “For” loop.
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PHP Chess Board</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        td {
+            width: 50px;
+            height: 50px;
+        }
+        .black {
+            background-color: black;
+        }
+        .white {
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Chess Board in PHP</h2>
+
+<table>
+<?php
+$size = 8; // 8x8 chessboard
+
+for ($row = 1; $row <= $size; $row++) {
+    echo "<tr>";
+    for ($col = 1; $col <= $size; $col++) {
+        // If row+col is even, color white; else black
+        $color = (($row + $col) % 2 == 0) ? "white" : "black";
+        echo "<td class='$color'></td>";
+    }
+    echo "</tr>";
+}
+?>
+</table>
+
+</body>
+</html>
+
+27.Articulate the mathematical operators with suitable examples in PHP.
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PHP Mathematical Operators Example</title>
+</head>
+<body>
+    <h2>PHP Mathematical Operators Example</h2>
+
+    <?php
+    $a = 10;
+    $b = 3;
+
+    echo "<h3>1. Arithmetic Operators</h3>";
+    echo "Addition: " . ($a + $b) . "<br>";        // 13
+    echo "Subtraction: " . ($a - $b) . "<br>";     // 7
+    echo "Multiplication: " . ($a * $b) . "<br>";  // 30
+    echo "Division: " . ($a / $b) . "<br>";        // 3.3333
+    echo "Modulus: " . ($a % $b) . "<br>";         // 1
+    echo "Exponentiation: " . ($a ** $b) . "<br>"; // 1000
+
+    echo "<h3>2. Assignment Operators</h3>";
+    $c = 5;
+    $c += 3; // 8
+    echo "After += 3: $c<br>";
+    $c *= 2; // 16
+    echo "After *= 2: $c<br>";
+
+    echo "<h3>3. Increment / Decrement Operators</h3>";
+    $d = 5;
+    echo "Pre-increment: " . (++$d) . "<br>"; // 6
+    echo "Post-increment: " . ($d++) . "<br>"; // 6 then $d=7
+    echo "After Post-increment: $d<br>"; // 7
+    echo "Pre-decrement: " . (--$d) . "<br>"; // 6
+    echo "Post-decrement: " . ($d--) . "<br>"; // 6 then $d=5
+    echo "After Post-decrement: $d<br>"; // 5
+
+    echo "<h3>4. Comparison Operators</h3>";
+    $x = 10;
+    $y = 7;
+    echo "$x == $y : " . ($x == $y ? 'True' : 'False') . "<br>";
+    echo "$x != $y : " . ($x != $y ? 'True' : 'False') . "<br>";
+    echo "$x > $y : " . ($x > $y ? 'True' : 'False') . "<br>";
+    echo "$x < $y : " . ($x < $y ? 'True' : 'False') . "<br>";
+    echo "$x >= $y : " . ($x >= $y ? 'True' : 'False') . "<br>";
+    echo "$x <= $y : " . ($x <= $y ? 'True' : 'False') . "<br>";
+    ?>
+</body>
+</html>
+
+
+
+
+
+
+
+
 
 
 
